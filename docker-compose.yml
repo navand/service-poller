@@ -1,0 +1,15 @@
+version: '3'
+services:
+  database:
+    image: mysql:5.7
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: dev
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: secret
+
+# Use this if you want to initialize the db using a init.sql on container startup. Replace "./server/init.sql" with the path to your init.sql.
+#    volumes:
+#      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql
