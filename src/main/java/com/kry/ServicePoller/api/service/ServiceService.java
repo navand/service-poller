@@ -34,23 +34,18 @@ public class ServiceService {
    * @param l Limit
    * @return ServiceGetAllResponse
    */
-  public Future<ServiceGetAllResponse> readAll(long userId, String p,
-                                               String l) {
+  public Future<ServiceGetAllResponse> readAll(long userId) {
     return dbClient.withTransaction(
         connection -> {
-          final int page = QueryUtils.getPage(p);
-          final int limit = QueryUtils.getLimit(l);
-          final int offset = QueryUtils.getOffset(page, limit);
-
           return serviceRepository.count(connection, userId)
             .flatMap(total ->
-              serviceRepository.selectAllForUser(connection, userId, limit, offset)
+              serviceRepository.selectAllForUser(connection, userId)
                 .map(result -> {
                   final List<ServiceGetByIdResponse> services = result.stream()
                     .map(ServiceGetByIdResponse::new)
                     .collect(Collectors.toList());
 
-                  return new ServiceGetAllResponse(total, limit, page, services);
+                  return new ServiceGetAllResponse(total, services);
                 })
             );
         })

@@ -11,8 +11,6 @@ import io.vertx.ext.web.RoutingContext;
 public class ServiceHandler {
 
   private static final String ID_PARAMETER = "id";
-  private static final String PAGE_PARAMETER = "page";
-  private static final String LIMIT_PARAMETER = "limit";
 
   private final ServiceService serviceService;
 
@@ -29,11 +27,9 @@ public class ServiceHandler {
    * @return ServiceGetAllResponse
    */
   public Future<ServiceGetAllResponse> readAll(RoutingContext rc) {
-    final String page = rc.queryParams().get(PAGE_PARAMETER);
-    final String limit = rc.queryParams().get(LIMIT_PARAMETER);
     final long userId = Long.parseLong(rc.user().principal().getString("userId"));
 
-    return serviceService.readAll(userId, page, limit)
+    return serviceService.readAll(userId)
       .onSuccess(success -> ResponseUtils.buildOkResponse(rc, success))
       .onFailure(throwable -> ResponseUtils.buildErrorResponse(rc, throwable));
   }

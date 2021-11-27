@@ -10,10 +10,6 @@ import io.vertx.ext.web.RoutingContext;
 
 public class UserHandler {
 
-  private static final String ID_PARAMETER = "id";
-  private static final String PAGE_PARAMETER = "page";
-  private static final String LIMIT_PARAMETER = "limit";
-
   private final UserService userService;
 
   public UserHandler(UserService userService) {

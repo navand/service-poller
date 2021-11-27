@@ -1,5 +1,6 @@
 package com.kry.ServicePoller.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -26,9 +27,11 @@ public class Service implements Serializable {
   private String status;
 
   @JsonProperty(value = "created_at")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
   private LocalDateTime createdAt;
 
   @JsonProperty(value = "updated_at")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
   private LocalDateTime updatedAt;
 
   public long getId() {

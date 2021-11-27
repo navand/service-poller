@@ -3,6 +3,8 @@ package com.kry.ServicePoller.api.domain.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import com.kry.ServicePoller.api.domain.entity.Service;
 
@@ -22,11 +24,19 @@ public class ServiceGetByIdResponse implements Serializable {
   @JsonProperty(value = "url")
   private final String url;
 
+  @JsonProperty(value = "status")
+  private final String status;
+
+  @JsonProperty(value = "created_at")
+  private final String createdAt;
+
   public ServiceGetByIdResponse(Service service) {
     this.id = service.getId();
     this.userId = service.getUserId();
     this.name = service.getName();
     this.url = service.getUrl();
+    this.status = service.getStatus();
+    this.createdAt = service.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
   public long getId() {
@@ -43,6 +53,14 @@ public class ServiceGetByIdResponse implements Serializable {
 
   public String getUrl() {
     return url;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
   }
 
   @Override
@@ -64,8 +82,9 @@ public class ServiceGetByIdResponse implements Serializable {
       "id=" + id +
       ", userId='" + userId + '\'' +
       ", name='" + name + '\'' +
-      ", url='" + url +
+      ", url='" + url + '\'' +
+      ", status='" + status + '\'' +
+      ", createdAt='" + createdAt +
       '}';
   }
-
 }

@@ -26,7 +26,7 @@ public class ServiceHealthCheckVerticle extends AbstractVerticle {
     final ServiceRepository serviceRepository = new ServiceRepository();
 
 
-    vertx.setPeriodic(3000, schedulerId -> {
+    vertx.setPeriodic(10000, schedulerId -> {
       dbClient.getConnection().compose(connection -> serviceRepository.selectAll(connection).eventually(v -> connection.close()))
         .onSuccess(event -> event.forEach(service -> {
           client.getAbs(service.getUrl()).send(response -> {

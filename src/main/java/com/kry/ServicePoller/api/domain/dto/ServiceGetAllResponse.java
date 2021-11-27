@@ -13,35 +13,17 @@ public class ServiceGetAllResponse implements Serializable {
   @JsonProperty(value = "total")
   private final int total;
 
-  @JsonProperty(value = "limit")
-  private final int limit;
-
-  @JsonProperty(value = "page")
-  private final int page;
-
   @JsonProperty(value = "services")
   private final List<ServiceGetByIdResponse> services;
 
   public ServiceGetAllResponse(int total,
-                            int limit,
-                            int page,
                             List<ServiceGetByIdResponse> services) {
     this.total = total;
-    this.limit = limit;
-    this.page = page;
     this.services = services;
   }
 
   public int getTotal() {
     return total;
-  }
-
-  public int getLimit() {
-    return limit;
-  }
-
-  public int getPage() {
-    return page;
   }
 
   public List<ServiceGetByIdResponse> getServices() {
@@ -54,22 +36,18 @@ public class ServiceGetAllResponse implements Serializable {
     if (o == null || getClass() != o.getClass()) return false;
     ServiceGetAllResponse that = (ServiceGetAllResponse) o;
     return total == that.total &&
-      limit == that.limit &&
-      page == that.page &&
       services.equals(that.services);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(total, limit, page, services);
+    return Objects.hash(total, services);
   }
 
   @Override
   public String toString() {
     return "ServiceGetAllResponse{" +
       "total=" + total +
-      ", limit=" + limit +
-      ", page=" + page +
       ", services=" + services +
       '}';
   }

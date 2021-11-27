@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 import static io.vertx.json.schema.common.dsl.Keywords.*;
 import static io.vertx.json.schema.common.dsl.Schemas.*;
-import static io.vertx.json.schema.draft7.dsl.Keywords.maximum;
 
 public class ServiceValidationHandler {
 
@@ -35,8 +34,6 @@ public class ServiceValidationHandler {
 
     return ValidationHandler
       .builder(schemaParser)
-      .queryParameter(buildPageQueryParameter())
-      .queryParameter(buildLimitQueryParameter())
       .build();
   }
 
@@ -114,13 +111,4 @@ public class ServiceValidationHandler {
   private ParameterProcessorFactory buildIdPathParameter() {
     return Parameters.param("id", intSchema());
   }
-
-  private ParameterProcessorFactory buildPageQueryParameter() {
-    return Parameters.optionalParam("page", intSchema());
-  }
-
-  private ParameterProcessorFactory buildLimitQueryParameter() {
-    return Parameters.optionalParam("limit", intSchema());
-  }
-
 }

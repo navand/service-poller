@@ -13,6 +13,7 @@ import io.vertx.sqlclient.SqlConnection;
 import io.vertx.sqlclient.templates.RowMapper;
 import io.vertx.sqlclient.templates.SqlTemplate;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ServiceRepository {
@@ -20,10 +21,10 @@ public class ServiceRepository {
   private static final Logger LOGGER = LoggerFactory.getLogger(ServiceRepository.class);
 
   private static final String SQL_SELECT_ALL = "SELECT * FROM services";
-  private static final String SQL_SELECT_ALL_FOR_USER = "SELECT * FROM services WHERE user_id = #{user_id} LIMIT #{limit} OFFSET #{offset}";
+  private static final String SQL_SELECT_ALL_FOR_USER = "SELECT * FROM services WHERE user_id = #{user_id}";
   private static final String SQL_SELECT_BY_ID = "SELECT * FROM services WHERE id = #{id} AND user_id = #{user_id}";
-  private static final String SQL_INSERT = "INSERT INTO services (user_id, name, url, status) " +
-    "VALUES (#{user_id}, #{name}, #{url}, #{status})";
+  private static final String SQL_INSERT = "INSERT INTO services (user_id, name, url) " +
+    "VALUES (#{user_id}, #{name}, #{url})";
   private static final String SQL_UPDATE = "UPDATE services SET user_id = #{user_id}, name = #{name}, url = #{url}, " +
     "status = #{status} WHERE id = #{id} AND user_id = #{user_id}";
   private static final String SQL_DELETE = "DELETE FROM services WHERE id = #{id} AND user_id = #{user_id}";
@@ -58,18 +59,13 @@ public class ServiceRepository {
    * Read all services using pagination
    *
    * @param connection PostgreSQL connection
-   * @param limit      Limit
-   * @param offset     Offset
    * @return List<Service>
    */
-  public Future<List<Service>> selectAllForUser(SqlConnection connection,
-                                         long userId,
-                                         int limit,
-                                         int offset) {
+  public Future<List<Service>> selectAllForUser(SqlConnection connection, long userId) {
     return SqlTemplate
       .forQuery(connection, SQL_SELECT_ALL_FOR_USER)
       .mapTo(Service.class)
-      .execute(Map.of("user_id", userId, "limit", limit, "offset", offset))
+      .execute(Map.of("user_id", userId))
       .map(rowSet -> {
         final List<Service> services = new ArrayList<>();
         rowSet.forEach(services::add);
@@ -124,6 +120,7 @@ public class ServiceRepository {
       .map(rowSet -> {
         if (rowSet.rowCount() == 1) {
           service.setId(rowSet.property(MySQLClient.LAST_INSERTED_ID));
+          service.setCreatedAt(LocalDateTime.now());
           return service;
         } else {
           throw new IllegalStateException(LogUtils.CANNOT_CREATE_SERVICE_MESSAGE.buildMessage());
