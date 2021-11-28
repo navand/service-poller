@@ -21,6 +21,7 @@ import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.AuthenticationHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.mysqlclient.MySQLPool;
 
 public class ApiVerticle extends AbstractVerticle {
@@ -57,6 +58,9 @@ public class ApiVerticle extends AbstractVerticle {
     MetricsRouter.setRouter(router);
     userRouter.setRouter(router);
     serviceRouter.setRouter(router);
+
+    // Handle frontend
+    router.get().handler(StaticHandler.create());
 
     buildHttpServer(vertx, promise, router);
   }

@@ -1,10 +1,12 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import com.github.gradle.node.npm.task.*
 
 plugins {
   java
   application
   id("com.github.johnrengelman.shadow") version "7.0.0"
+  id("com.github.node-gradle.node") version "3.1.1"
 }
 
 group = "com.kry"
@@ -48,6 +50,34 @@ dependencies {
   implementation("mysql:mysql-connector-java:5.1.6")
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+}
+
+node {
+  version.set("14.13.0")
+  npmVersion.set("7.16.0")
+  yarnVersion.set("")
+  npmInstallCommand.set("install")
+  distBaseUrl.set("https://nodejs.org/dist")
+  download.set(true)
+  workDir.set(file("${project.projectDir}/.cache/nodejs"))
+  npmWorkDir.set(file("${project.projectDir}/.cache/npm"))
+  yarnWorkDir.set(file("${project.projectDir}/.cache/yarn"))
+  nodeProjectDir.set(file("${project.projectDir}/src/main/frontend"))
+}
+
+val buildFrontend by tasks.creating(NpmTask::class) {
+  npmCommand.set(listOf("run", "build"))
+  dependsOn("npmInstall")
+}
+
+val copyToWebRoot by tasks.creating(Copy::class) {
+  from("src/main/frontend/build")
+  destinationDir = File("${buildDir}/classes/java/main/webroot")
+  dependsOn(buildFrontend)
+}
+
+val processResources by tasks.getting(ProcessResources::class) {
+  dependsOn(copyToWebRoot)
 }
 
 java {

@@ -1,7 +1,18 @@
 version: '3'
 services:
+  servicepoller:
+    image: com.kry/service-poller
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - database
+
   database:
     image: mysql:5.7
+    hostname: mysqlhost
     ports:
       - "3309:3306"
     environment:
@@ -13,3 +24,10 @@ services:
 # Use this if you want to initialize the db using a init.sql on container startup. Replace "./server/init.sql" with the path to your init.sql.
 #    volumes:
 #      - ./server/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  dbdata:
+
+networks:
+  database:
+    driver: bridge
