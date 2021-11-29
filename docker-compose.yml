@@ -20,6 +20,8 @@ services:
       MYSQL_DATABASE: dev
       MYSQL_USER: dev
       MYSQL_PASSWORD: secret
+    networks:
+      - database
 
 # Use this if you want to initialize the db using a init.sql on container startup. Replace "./server/init.sql" with the path to your init.sql.
 #    volumes:
