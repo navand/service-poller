@@ -1,15 +1,5 @@
-version: '3'
+version: "3"
 services:
-  servicepoller:
-    image: com.kry/service-poller
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - database
-
   database:
     image: mysql:5.7
     hostname: mysqlhost
@@ -21,6 +11,18 @@ services:
       MYSQL_USER: dev
       MYSQL_PASSWORD: secret
     networks:
+      - database
+
+  servicepoller:
+    image: com.kry/service-poller
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - database
+    depends_on:
       - database
 
 # Use this if you want to initialize the db using a init.sql on container startup. Replace "./server/init.sql" with the path to your init.sql.
