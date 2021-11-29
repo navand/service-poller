@@ -4,10 +4,7 @@ import com.kry.ServicePoller.api.domain.dto.UserResponse;
 import com.kry.ServicePoller.api.domain.entity.User;
 import com.kry.ServicePoller.api.repository.UserRepository;
 import com.kry.ServicePoller.utils.LogUtils;
-import io.vertx.codegen.annotations.Nullable;
 import io.vertx.core.Future;
-import io.vertx.core.Promise;
-import io.vertx.core.impl.future.FailedFuture;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
 import io.vertx.core.json.JsonObject;
@@ -16,10 +13,7 @@ import io.vertx.ext.auth.authentication.CredentialValidationException;
 import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.mysqlclient.MySQLPool;
 
-import javax.naming.AuthenticationException;
 import java.util.Base64;
-import java.util.NoSuchElementException;
-import java.util.concurrent.CompletableFuture;
 
 public class UserService {
 

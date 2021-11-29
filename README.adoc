@@ -3,6 +3,8 @@
 image:https://img.shields.io/badge/Java-11-success[]
 image:https://img.shields.io/badge/vert.x-4.2.1-purple.svg[link="https://vertx.io"]
 
+== Description
+
 The Service Poller is a monitoring tools that we can check our service's status. We check the status of any URL by HTTP GET request and store as *OK* (success response) and *FAIL* (unavailable). All services with their status are visualized in a table with multiple functionality regarding Creating, Updating and Delete.
 
 == Getting started
