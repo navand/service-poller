@@ -30,7 +30,7 @@ const ServiceForm = (props) => {
         setLoading(true);
         if (state === "update")
           serviceService
-            .update(values)
+            .update({ id: service.id, ...values })
             .then(
               () => {
                 onFinished();
