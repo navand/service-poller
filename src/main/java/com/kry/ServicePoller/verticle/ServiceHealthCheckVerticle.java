@@ -1,17 +1,11 @@
 package com.kry.ServicePoller.verticle;
 
-import com.kry.ServicePoller.api.domain.entity.Service;
 import com.kry.ServicePoller.api.repository.ServiceRepository;
 import com.kry.ServicePoller.utils.DbUtils;
-import com.kry.ServicePoller.utils.LogUtils;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.mysqlclient.MySQLPool;
 
@@ -29,7 +23,7 @@ public class ServiceHealthCheckVerticle extends AbstractVerticle {
     vertx.setPeriodic(10000, schedulerId -> {
       dbClient.getConnection().compose(connection -> serviceRepository.selectAll(connection).eventually(v -> connection.close()))
         .onSuccess(event -> event.forEach(service -> {
-          client.getAbs(service.getUrl()).send(response -> {
+          client.getAbs(service.getUrl()).timeout(5000).send(response -> {
             if (response.succeeded()) {
               service.setStatus(200 == response.result().statusCode() ? "OK" : "FAIL");
             } else {

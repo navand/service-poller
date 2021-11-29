@@ -17,7 +17,10 @@ public class MainVerticle extends AbstractVerticle {
       .flatMap(migrationVerticleId -> deployApiVerticle(vertx))
       .flatMap(migrationVerticleId -> deployServiceHealthCheckVerticle(vertx))
       .onSuccess(success -> LOGGER.info(LogUtils.RUN_APP_SUCCESSFULLY_MESSAGE.buildMessage(System.currentTimeMillis() - start)))
-      .onFailure(throwable -> LOGGER.error(throwable.getMessage()));
+      .onFailure(throwable -> {
+        LOGGER.error(throwable.getMessage());
+        throw new RuntimeException();
+      });
   }
 
   private Future<Void> deployMigrationVerticle(Vertx vertx) {
