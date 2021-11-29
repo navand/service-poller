@@ -10,7 +10,7 @@ public class MainVerticle extends AbstractVerticle {
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
 
   @Override
-  public void start() {
+  public void start(Promise<Void> promise) {
     final long start = System.currentTimeMillis();
 
     deployMigrationVerticle(vertx)
@@ -19,7 +19,7 @@ public class MainVerticle extends AbstractVerticle {
       .onSuccess(success -> LOGGER.info(LogUtils.RUN_APP_SUCCESSFULLY_MESSAGE.buildMessage(System.currentTimeMillis() - start)))
       .onFailure(throwable -> {
         LOGGER.error(throwable.getMessage());
-        throw new RuntimeException();
+        promise.fail(throwable);
       });
   }
 
