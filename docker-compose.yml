@@ -18,8 +18,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    restart_policy:
-      condition: on-failure
+    restart: on-failure
     ports:
       - "8080:8080"
     networks:
