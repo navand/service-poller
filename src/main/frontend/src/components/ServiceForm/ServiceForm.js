@@ -10,7 +10,7 @@ const ServiceForm = (props) => {
   const { state, service, onFinished } = props;
   const [isLoading, setLoading] = useState(false);
   const regexUrl =
-    /^(http:\/\/|https:\/\/)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$/;
+    /^(http:\/\/|https:\/\/)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{2,3}.?([a-z]+)?$/;
 
   const ServiceSchema = Yup.object().shape({
     name: Yup.string().required("Enter your name."),
