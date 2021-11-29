@@ -1,31 +1,45 @@
-= Servicepoller
+= Service Poller
 
+image:https://img.shields.io/badge/Java-11-success[]
 image:https://img.shields.io/badge/vert.x-4.2.1-purple.svg[link="https://vertx.io"]
 
-This application was generated using http://start.vertx.io
+The Service Poller is a monitoring tools that we can check our service's status. We check the status of any URL by HTTP GET request and store as *OK* (success response) and *FAIL* (unavailable). All services with their status are visualized in a table with multiple functionality regarding Creating, Updating and Delete.
 
-== Building
+== Getting started
+These instructions will get you through the bootstrap phase of creating and deploying samples of containerized applications with Docker Compose.
 
-To launch your tests:
+=== Prerequisites
+
+- Make sure that you have Docker and Docker Compose installed
+- Windows or macOS:
+[Install Docker Desktop](https://www.docker.com/get-started)
+- Linux: [Install Docker](https://www.docker.com/get-started) and then
+[Docker Compose](https://github.com/docker/compose)
+
+== Configuration
+
+You can change the database properties like host, port and credential from `application.properties`:
 ```
-./gradlew clean test
+datasource.host=
+datasource.port=
+datasource.database=
+datasource.username=
+datasource.password=
 ```
 
-To package your application:
+By default to connect application to the database started by docker-compose on same network with application the port has been set *3306*.
+
+== Running
+
+The root directory project contains the `docker-compose.yaml` which
+describes the configuration of service components includes main *Service Poller* and the database (MySQL).
+
+```console
+docker-compose up -d
 ```
-./gradlew clean assemble
+
+Access in web:
+
 ```
-
-To run your application:
+http://localhost:8080
 ```
-./gradlew clean run
-```
-
-== Help
-
-* https://vertx.io/docs/[Vert.x Documentation]
-* https://stackoverflow.com/questions/tagged/vert.x?sort=newest&pageSize=15[Vert.x Stack Overflow]
-* https://groups.google.com/forum/?fromgroups#!forum/vertx[Vert.x User Group]
-* https://gitter.im/eclipse-vertx/vertx-users[Vert.x Gitter]
-
-
