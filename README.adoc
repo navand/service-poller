@@ -45,3 +45,17 @@ Access in web:
 ```
 http://localhost:8080
 ```
+
+Login from web with these 2 users:
+
+User 1:
+```
+username: user1
+password: password1
+```
+
+User 2:
+```
+username: user2
+password: password2
+```

@@ -50,6 +50,7 @@ dependencies {
   implementation("mysql:mysql-connector-java:5.1.6")
   testImplementation("io.vertx:vertx-junit5")
   testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+  testImplementation("org.testcontainers:mysql:1.16.2")
 }
 
 node {
