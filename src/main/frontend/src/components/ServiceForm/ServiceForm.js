@@ -28,6 +28,7 @@ const ServiceForm = (props) => {
     onSubmit: (values) => {
       if (values.name && values.url) {
         setLoading(true);
+        delete service.created_at;
         if (state === "update")
           serviceService
             .update({ ...service, ...values })
