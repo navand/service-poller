@@ -5,7 +5,6 @@ import com.kry.ServicePoller.api.domain.dto.ServiceGetByIdResponse;
 import com.kry.ServicePoller.api.domain.entity.Service;
 import com.kry.ServicePoller.api.repository.ServiceRepository;
 import com.kry.ServicePoller.utils.LogUtils;
-import com.kry.ServicePoller.utils.QueryUtils;
 import io.vertx.core.Future;
 import io.vertx.core.impl.logging.Logger;
 import io.vertx.core.impl.logging.LoggerFactory;
@@ -30,8 +29,6 @@ public class ServiceService {
   /**
    * Read all services using pagination
    *
-   * @param p Page
-   * @param l Limit
    * @return ServiceGetAllResponse
    */
   public Future<ServiceGetAllResponse> readAll(long userId) {

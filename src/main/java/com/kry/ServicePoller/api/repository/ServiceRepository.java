@@ -25,7 +25,9 @@ public class ServiceRepository {
   private static final String SQL_SELECT_BY_ID = "SELECT * FROM services WHERE id = #{id} AND user_id = #{user_id}";
   private static final String SQL_INSERT = "INSERT INTO services (user_id, name, url) " +
     "VALUES (#{user_id}, #{name}, #{url})";
-  private static final String SQL_UPDATE = "UPDATE services SET user_id = #{user_id}, name = #{name}, url = #{url}, " +
+  private static final String SQL_UPDATE = "UPDATE services SET name = #{name}, url = #{url} " +
+    "WHERE id = #{id} AND user_id = #{user_id}";
+  private static final String SQL_UPDATE_STATUS = "UPDATE services SET name = #{name}, url = #{url}, " +
     "status = #{status} WHERE id = #{id} AND user_id = #{user_id}";
   private static final String SQL_DELETE = "DELETE FROM services WHERE id = #{id} AND user_id = #{user_id}";
   private static final String SQL_COUNT = "SELECT COUNT(*) AS total FROM services WHERE user_id = #{user_id}";
@@ -130,7 +132,7 @@ public class ServiceRepository {
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Insert service", throwable.getMessage())));
   }
 
-  /**
+   /**
    * Update one service
    *
    * @param connection PostgreSQL connection
@@ -138,9 +140,15 @@ public class ServiceRepository {
    * @return Service
    */
   public Future<Service> update(SqlConnection connection,
-                             Service service) {
+                                Service service) {
+    String template;
+    if(service != null & service.getStatus() != null) {
+      template = SQL_UPDATE_STATUS;
+    } else {
+      template = SQL_UPDATE;
+    }
     return SqlTemplate
-      .forUpdate(connection, SQL_UPDATE)
+      .forUpdate(connection, template)
       .mapFrom(Service.class)
       .execute(service)
       .flatMap(rowSet -> {
@@ -150,7 +158,7 @@ public class ServiceRepository {
           throw new NoSuchElementException(LogUtils.NO_SERVICE_WITH_ID_MESSAGE.buildMessage(service.getId()));
         }
       })
-      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Update service", SQL_UPDATE)))
+      .onSuccess(success -> LOGGER.info(LogUtils.REGULAR_CALL_SUCCESS_MESSAGE.buildMessage("Update service", template)))
       .onFailure(throwable -> LOGGER.error(LogUtils.REGULAR_CALL_ERROR_MESSAGE.buildMessage("Update service", throwable.getMessage())));
   }
 

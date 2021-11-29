@@ -36,7 +36,7 @@ public class ServiceGetByIdResponse implements Serializable {
     this.name = service.getName();
     this.url = service.getUrl();
     this.status = service.getStatus();
-    this.createdAt = service.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    this.createdAt = service.getCreatedAt() == null ? null : service.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
   public long getId() {
