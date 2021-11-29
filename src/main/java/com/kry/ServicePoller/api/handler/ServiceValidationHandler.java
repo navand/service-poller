@@ -105,7 +105,7 @@ public class ServiceValidationHandler {
   private ObjectSchemaBuilder buildBodySchemaBuilder() {
     return objectSchema()
       .requiredProperty("name", stringSchema().with(minLength(1)).with(maxLength(255)))
-      .requiredProperty("url", stringSchema().with(minLength(5)).with(maxLength(255)).with(pattern(Pattern.compile("^(http:\\/\\/|https:\\/\\/)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$"))));
+      .requiredProperty("url", stringSchema().with(minLength(5)).with(maxLength(255)).with(pattern(Pattern.compile("^(http:\\/\\/|https:\\/\\/)(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{2,3}.?([a-z]+)?$"))));
   }
 
   private ParameterProcessorFactory buildIdPathParameter() {
