@@ -25,7 +25,6 @@ services:
       - database_link
     depends_on:
       - database
-      - database_link
 
 # Use this if you want to initialize the db using a init.sql on container startup. Replace "./server/init.sql" with the path to your init.sql.
 #    volumes:
