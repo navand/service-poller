@@ -17,7 +17,7 @@ public class HealthCheckRouter {
    *
    * @param vertx    Vertx context
    * @param router   Router
-   * @param dbClient PostgreSQL pool
+   * @param dbClient MySQLPool pool
    */
   public static void setRouter(Vertx vertx,
                                Router router,

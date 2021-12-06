@@ -24,7 +24,7 @@ const Sidebar = ({ color, image, routes, login }) => {
             className="simple-text logo-mini mx-1"
           >
             <div className="logo-img">
-              <img src={process.env.PUBLIC_URL + "/assets/kry-logo-neg.svg"} />
+              <img alt="" src={process.env.PUBLIC_URL + "/assets/kry-logo-neg.svg"} />
             </div>
           </a>
         </div>

@@ -25,7 +25,7 @@ public class DbUtils {
      * Build DB client that is used to manage a pool of connections
      *
      * @param vertx Vertx context
-     * @return PostgreSQL pool
+     * @return MySQLPool pool
      */
     public static MySQLPool buildDbClient(Vertx vertx) {
         final Properties properties = ConfigUtils.getInstance().getProperties();

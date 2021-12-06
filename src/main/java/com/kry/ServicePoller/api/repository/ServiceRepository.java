@@ -39,7 +39,7 @@ public class ServiceRepository {
   /**
    * Read all services using pagination
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @return List<Service>
    */
   public Future<List<Service>> selectAll(SqlConnection connection) {
@@ -60,7 +60,7 @@ public class ServiceRepository {
   /**
    * Read all services using pagination
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @return List<Service>
    */
   public Future<List<Service>> selectAllForUser(SqlConnection connection, long userId) {
@@ -81,7 +81,7 @@ public class ServiceRepository {
   /**
    * Read one service
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @param id         Service ID
    * @return Service
    */
@@ -108,7 +108,7 @@ public class ServiceRepository {
   /**
    * Create one service
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @param service       Service
    * @return Service
    */
@@ -135,7 +135,7 @@ public class ServiceRepository {
    /**
    * Update one service
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @param service       Service
    * @return Service
    */
@@ -165,7 +165,7 @@ public class ServiceRepository {
   /**
    * Update one service
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @param id         Service ID
    * @return Void
    */
@@ -189,7 +189,7 @@ public class ServiceRepository {
   /**
    * Count all services
    *
-   * @param connection PostgreSQL connection
+   * @param connection MySQLPool connection
    * @return Integer
    */
   public Future<Integer> count(SqlConnection connection, long userId) {
